@@ -18,14 +18,10 @@ class TopContent extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Today’s Overview", style: AppTextStyles.heading2),
-                  IconButton(
-                      onPressed: () {}, icon: const Icon(Icons.menu_outlined))
-                ],
-              ),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child:
+                      Text("Today’s Overview", style: AppTextStyles.heading2)),
             ),
             Align(
                 alignment: Alignment.centerLeft,

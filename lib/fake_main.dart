@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hcm/theme_provider.dart'; // Pastikan ini mengarah ke file tema yang benar
+import 'package:hcm/theme_provider.dart';
 import 'package:provider/provider.dart';
-
-import 'navbar.dart';
+import 'initial_display/page_login.dart';
 
 void main() {
   runApp(
@@ -22,10 +21,10 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: lightMode, 
-      darkTheme: darkMode, 
-      themeMode: themeProvider.themeMode, 
-      home: const Navbar(),
+      theme: lightMode,
+      darkTheme: darkMode,
+      themeMode: themeProvider.themeMode,
+      home: const PageLogin(),
     );
   }
 }

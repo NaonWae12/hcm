@@ -31,11 +31,11 @@ class General extends StatelessWidget {
       'title': 'Set up your PIN',
       'page': const PinSettingsPage(),
     },
-    {
-      'icon': 'assets/icons/translate_rounded.svg',
-      'title': 'Language',
-      'page': const LanguageSettingsPage(),
-    },
+    // {
+    //   'icon': 'assets/icons/translate_rounded.svg',
+    //   'title': 'Language',
+    //   'page': const LanguageSettingsPage(),
+    // },
   ];
 
   @override
@@ -158,18 +158,18 @@ class PinSettingsPage extends StatelessWidget {
   }
 }
 
-class LanguageSettingsPage extends StatelessWidget {
-  const LanguageSettingsPage({super.key});
+// class LanguageSettingsPage extends StatelessWidget {
+//   const LanguageSettingsPage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Language Settings'),
-      ),
-      body: const Center(
-        child: Text('Language Settings Page'),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Language Settings'),
+//       ),
+//       body: const Center(
+//         child: Text('Language Settings Page'),
+//       ),
+//     );
+//   }
+// }

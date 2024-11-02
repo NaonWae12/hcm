@@ -8,6 +8,7 @@ class TextfieldInput extends StatelessWidget {
   final TextInputType? keyboardType;
   final dynamic icon;
   final BorderSide? borderSide;
+  final Color? svgColor;
 
   const TextfieldInput({
     super.key,
@@ -16,6 +17,7 @@ class TextfieldInput extends StatelessWidget {
     this.keyboardType,
     this.icon,
     this.borderSide,
+    this.svgColor,
   });
 
   @override
@@ -32,6 +34,9 @@ class TextfieldInput extends StatelessWidget {
           width: 24,
           height: 24,
           fit: BoxFit.scaleDown,
+          colorFilter: svgColor != null
+              ? ColorFilter.mode(svgColor!, BlendMode.srcIn)
+              : null, // Menggunakan colorFilter
         ),
       );
     }

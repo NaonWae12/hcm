@@ -7,11 +7,11 @@ import '../components/primary_container.dart';
 class About extends StatelessWidget {
   About({super.key});
   final List<Map<String, dynamic>> settingsItems = [
-    {
-      'icon': Icons.help,
-      'title': 'Help Center',
-      'page': const AccountSettingsPage(),
-    },
+    // {
+    //   'icon': Icons.help,
+    //   'title': 'Help Center',
+    //   'page': const AccountSettingsPage(),
+    // },
     {
       'icon': 'assets/icons/note_text_rounded.svg',
       'title': 'Privacy Policy',
@@ -73,21 +73,21 @@ class About extends StatelessWidget {
   }
 }
 
-class AccountSettingsPage extends StatelessWidget {
-  const AccountSettingsPage({super.key});
+// class AccountSettingsPage extends StatelessWidget {
+//   const AccountSettingsPage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Account Settings'),
-      ),
-      body: const Center(
-        child: Text('Account Settings Page'),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Account Settings'),
+//       ),
+//       body: const Center(
+//         child: Text('Account Settings Page'),
+//       ),
+//     );
+//   }
+// }
 
 class NotificationSettingsPage extends StatelessWidget {
   const NotificationSettingsPage({super.key});

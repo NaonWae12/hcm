@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'activity/page_activity.dart';
-import 'analytic/page_analytic.dart';
 import 'attendance/page_attendance.dart';
 import 'home/page_home.dart';
 import 'profile/page_profile.dart';
@@ -16,12 +14,10 @@ class Navbar extends StatefulWidget {
 }
 
 class _NavbarState extends State<Navbar> {
-  int _selectedIndex = 0; // Menyimpan index halaman yang aktif
+  int _selectedIndex = 0;
 
   static final List<Widget> _pages = <Widget>[
     const PageHome(),
-    const PageAnalytic(),
-    const PageActivity(),
     const PageProfile(),
   ];
 
@@ -114,41 +110,6 @@ class _NavbarState extends State<Navbar> {
                 ),
               ),
               Expanded(
-                child: IconButton(
-                  iconSize: 20,
-                  icon: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SvgPicture.asset(
-                          _selectedIndex == 1
-                              ? 'assets/icons/pie_chart_rounded.svg'
-                              : 'assets/icons/pie_chart_outlined.svg',
-                          colorFilter: ColorFilter.mode(
-                            _selectedIndex == 1
-                                ? Theme.of(context).colorScheme.primary
-                                : Colors.grey,
-                            BlendMode.srcIn,
-                          )),
-                      Flexible(
-                        child: Text(
-                          "Analytic",
-                          style: GoogleFonts.quicksand(
-                            color: _selectedIndex == 1
-                                ? Theme.of(context).colorScheme.primary
-                                : Colors.grey,
-                            fontSize: 12,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
-                  ),
-                  onPressed: () {
-                    _onItemTapped(1);
-                  },
-                ),
-              ),
-              Expanded(
                 child: SizedBox(
                   width: 4,
                   child: Column(
@@ -173,45 +134,11 @@ class _NavbarState extends State<Navbar> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       SvgPicture.asset(
-                          _selectedIndex == 2
-                              ? 'assets/icons/hourglass_line_rounded.svg'
-                              : 'assets/icons/hourglass_line_outlined.svg',
-                          colorFilter: ColorFilter.mode(
-                            _selectedIndex == 2
-                                ? Theme.of(context).colorScheme.primary
-                                : Colors.grey,
-                            BlendMode.srcIn,
-                          )),
-                      Flexible(
-                        child: Text(
-                          "Activity",
-                          style: GoogleFonts.quicksand(
-                            color: _selectedIndex == 2
-                                ? Theme.of(context).colorScheme.primary
-                                : Colors.grey,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  onPressed: () {
-                    _onItemTapped(2);
-                  },
-                ),
-              ),
-              Expanded(
-                child: IconButton(
-                  iconSize: 20,
-                  icon: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SvgPicture.asset(
-                          _selectedIndex == 3
+                          _selectedIndex == 1
                               ? 'assets/icons/profile_rounded.svg'
                               : 'assets/icons/profile_outlined.svg',
                           colorFilter: ColorFilter.mode(
-                            _selectedIndex == 3
+                            _selectedIndex == 1
                                 ? Theme.of(context).colorScheme.primary
                                 : Colors.grey,
                             BlendMode.srcIn,
@@ -220,7 +147,7 @@ class _NavbarState extends State<Navbar> {
                         child: Text(
                           "Profile",
                           style: GoogleFonts.quicksand(
-                            color: _selectedIndex == 3
+                            color: _selectedIndex == 1
                                 ? Theme.of(context).colorScheme.primary
                                 : Colors.grey,
                             fontSize: 12,
@@ -230,7 +157,7 @@ class _NavbarState extends State<Navbar> {
                     ],
                   ),
                   onPressed: () {
-                    _onItemTapped(3);
+                    _onItemTapped(1);
                   },
                 ),
               ),
