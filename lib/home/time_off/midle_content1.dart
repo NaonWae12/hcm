@@ -3,7 +3,6 @@ import 'package:hcm/components/primary_container.dart';
 import 'package:hcm/components/text_style.dart';
 
 import 'date_picker_field.dart';
-import 'time_selector.dart';
 
 class MidleContent1 extends StatefulWidget {
   const MidleContent1({super.key});
@@ -13,7 +12,8 @@ class MidleContent1 extends StatefulWidget {
 }
 
 class _MidleContent1State extends State<MidleContent1> {
-  DateTime? _fromDate;
+  DateTime? _fromDate1;
+  DateTime? _fromDate2;
   Future<void> selectDate(BuildContext context, DateTime? initialDate,
       ValueChanged<DateTime?> onDateSelected) async {
     final DateTime? picked = await showDatePicker(
@@ -45,18 +45,29 @@ class _MidleContent1State extends State<MidleContent1> {
               'Start date',
               style: AppTextStyles.heading2_1,
             ),
-            const SizedBox(height: 10),
             DatePickerField(
               label: 'Select date',
-              selectedDate: _fromDate,
+              selectedDate: _fromDate1,
               onDateSelected: (newDate) {
                 setState(() {
-                  _fromDate = newDate;
+                  _fromDate1 = newDate;
                 });
               },
             ),
             const SizedBox(height: 8),
-            const TimeSelector()
+            Text(
+              'End date',
+              style: AppTextStyles.heading2_1,
+            ),
+            DatePickerField(
+              label: 'Select date',
+              selectedDate: _fromDate2,
+              onDateSelected: (newDate) {
+                setState(() {
+                  _fromDate2 = newDate;
+                });
+              },
+            ),
           ],
         ),
       ),

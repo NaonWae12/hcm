@@ -16,6 +16,7 @@ class PageProfile extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(200),
         child: AppBar(
+          automaticallyImplyLeading: false,
           flexibleSpace: Container(
             width: MediaQuery.of(context).size.width,
             height: 200,

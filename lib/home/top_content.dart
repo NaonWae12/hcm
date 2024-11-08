@@ -3,12 +3,14 @@ import 'package:hcm/components/custom_choice_container.dart';
 import 'package:hcm/components/secondary_container.dart';
 import 'package:hcm/components/primary_container.dart';
 import 'package:hcm/components/text_style.dart';
+import 'package:intl/intl.dart';
 
 class TopContent extends StatelessWidget {
   const TopContent({super.key});
 
   @override
   Widget build(BuildContext context) {
+    String formattedDate = DateFormat('d MMMM yyyy').format(DateTime.now());
     return PrimaryContainer(
       borderRadius: BorderRadius.circular(24),
       width: MediaQuery.of(context).size.width / 1.1,
@@ -25,8 +27,7 @@ class TopContent extends StatelessWidget {
             ),
             Align(
                 alignment: Alignment.centerLeft,
-                child:
-                    Text('24 September 2023', style: AppTextStyles.heading1_1)),
+                child: Text(formattedDate, style: AppTextStyles.heading1_1)),
             const SizedBox(height: 14),
             SecondaryContainer(
               width: MediaQuery.of(context).size.width,

@@ -1,11 +1,38 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:hcm/components/primary_container.dart';
 import 'package:hcm/components/text_style.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../navbar.dart';
 import 'content_login.dart';
 
-class PageLogin extends StatelessWidget {
+class PageLogin extends StatefulWidget {
   const PageLogin({super.key});
+
+  @override
+  State<PageLogin> createState() => _PageLoginState();
+}
+
+class _PageLoginState extends State<PageLogin> {
+  @override
+  void initState() {
+    super.initState();
+    checkSession();
+  }
+
+  Future<void> checkSession() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? sessionId = prefs.getString('session_id');
+
+    if (sessionId != null) {
+      // Jika session_id ditemukan, arahkan langsung ke Navbar
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const Navbar()),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +43,18 @@ class PageLogin extends StatelessWidget {
           Column(
             children: [
               const SizedBox(height: 40),
+              // Text(
+              //   'Welcome Back!',
+              //   style: AppTextStyles.heading1_2,
+              // ),
+              Image.asset(
+                'assets/3.png',
+                height: 50,
+              ),
               Text(
-                'Welcome Back!',
-                style: AppTextStyles.heading1_2,
+                "PT. Jakarana Tama",
+                style: AppTextStyles.heading3_3,
+                textAlign: TextAlign.center,
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width / 1.25,
@@ -28,22 +64,21 @@ class PageLogin extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 10),
               Expanded(
                 child: PrimaryContainer(
                   color: Theme.of(context).colorScheme.surface,
                   borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15),
-                      bottomLeft: Radius.circular(0),
-                      bottomRight: Radius.circular(0)),
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                  ),
                   width: MediaQuery.of(context).size.width,
-                  height: 200,
+                  height: 150,
                   child: const ContentLogin(),
                 ),
-              )
+              ),
             ],
-          )
+          ),
         ],
       ),
     );

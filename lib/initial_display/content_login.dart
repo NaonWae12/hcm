@@ -1,15 +1,17 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hcm/components/colors.dart';
+
 import 'package:hcm/components/primary_button.dart';
 import 'package:hcm/components/text_style.dart';
 import 'package:hcm/components/textfield_input.dart';
 import 'package:hcm/components/textfield_pw.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
+import '../custom_loading.dart';
 import '../navbar.dart';
 
 class ContentLogin extends StatefulWidget {
@@ -20,40 +22,98 @@ class ContentLogin extends StatefulWidget {
 }
 
 class _ContentLoginState extends State<ContentLogin> {
-  final TextEditingController databaseController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final String databaseName = 'JT_HCM_STG';
 
   Future<void> login() async {
-    final url = Uri.parse('https://hr.simise.id/api/login');
+    // Log untuk menampilkan username dan database yang digunakan
+    // print('Attempting login with username: ${usernameController.text}');
+    // print('Database: $databaseName');
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const CustomLoading(imagePath: 'assets/3.png'),
+    );
+
+    final url = Uri.parse(
+        'https://jt-hcm.simise.id/api/login?db=$databaseName&login=${usernameController.text}&password=${passwordController.text}');
     try {
       final response = await http.post(
         url,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer H2BSQUDSOEJXRLT0P2W1GLI9BSYGCQ08',
         },
         body: jsonEncode({
-          'db': databaseController.text,
+          'db': databaseName,
           'login': usernameController.text,
           'password': passwordController.text,
         }),
       );
 
+      // Log untuk menampilkan status code dan body response
+      print('Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
+
       if (response.statusCode == 200) {
-        // ignore: unused_local_variable
         final data = jsonDecode(response.body);
-        // Proses data response jika login berhasil
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const Navbar()),
-        );
+        print(
+            'Decoded Data: $data'); // Log untuk menampilkan data yang di-decode
+
+        if (data['status'] == 'success') {
+          print(
+              'Login successful. Session ID: ${data['session_id']}'); // Log untuk menampilkan session ID
+
+          // Log user_id dan employee_id jika terdapat dalam response
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+
+          if (data.containsKey('user_id')) {
+            print('User ID: ${data['user_id']}');
+            await prefs.setInt('user_id', data['user_id']); // Menyimpan user_id
+          }
+
+          if (data.containsKey('employee_id')) {
+            print(
+                'Employee ID: ${data['employee_id']}'); // Menampilkan employee_id
+            await prefs.setInt(
+                'employee_id',
+                data[
+                    'employee_id']); // Menyimpan employee_id di SharedPreferences
+          }
+
+          await prefs.setString('session_id', data['session_id']);
+
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const Navbar()),
+          );
+        } else {
+          print(
+              'Login failed. Message: ${data['message']}'); // Log jika login gagal
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text("Login Failed"),
+              content: Text(data['message'] ??
+                  "Please check your credentials and try again."),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text("OK"),
+                ),
+              ],
+            ),
+          );
+        }
       } else {
-        // Tampilkan pesan error jika login gagal
+        print(
+            'Failed to connect. Status code: ${response.statusCode}'); // Log jika request gagal
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text("Login Failed"),
-            content: const Text("Please check your credentials and try again."),
+            title: const Text("Error"),
+            content:
+                Text("Failed to connect. Status code: ${response.statusCode}"),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
@@ -64,7 +124,7 @@ class _ContentLoginState extends State<ContentLogin> {
         );
       }
     } catch (error) {
-      // Tampilkan pesan error jika terjadi kesalahan koneksi
+      print('An error occurred: $error'); // Log jika terjadi error
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -90,14 +150,6 @@ class _ContentLoginState extends State<ContentLogin> {
           const Text(
               "Ensure that your account is associated with your company's email address to access our applications."),
           const SizedBox(height: 20),
-          TextfieldInput(
-            controller: databaseController,
-            hintText: 'https://hr.simise.id',
-            icon: "assets/icons/link.svg",
-            svgColor: Colors.grey,
-            borderSide: const BorderSide(color: Colors.grey),
-          ),
-          const SizedBox(height: 10),
           TextfieldInput(
             controller: usernameController,
             hintText: 'Username',
@@ -125,35 +177,6 @@ class _ContentLoginState extends State<ContentLogin> {
               buttonText: 'Sign In',
               onPressed: login),
           const SizedBox(height: 30),
-          const Row(
-            children: [
-              Flexible(child: Divider()),
-              SizedBox(width: 5),
-              Text('or continue'),
-              SizedBox(width: 5),
-              Flexible(child: Divider()),
-            ],
-          ),
-          const SizedBox(height: 30),
-          PrimaryButton(
-            buttonWidth: MediaQuery.of(context).size.width / 1,
-            buttonHeight: 50,
-            backgroundColor: AppColors.textLight2,
-            onPressed: () {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => const Navbar(),
-                ),
-              );
-            },
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              SvgPicture.asset('assets/icons/link.svg'),
-              const SizedBox(width: 2),
-              const Text(
-                "Sign in With Company's URL",
-              )
-            ]),
-          ),
           Expanded(
             child: Align(
               alignment: Alignment.bottomLeft,

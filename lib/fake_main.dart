@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hcm/theme_provider.dart';
 import 'package:provider/provider.dart';
-import 'initial_display/page_login.dart';
+import 'initial_display/splash_screen.dart';
+import 'initial_display/welcome_screen.dart';
 
 void main() {
   runApp(
@@ -24,7 +25,11 @@ class MyApp extends StatelessWidget {
       theme: lightMode,
       darkTheme: darkMode,
       themeMode: themeProvider.themeMode,
-      home: const PageLogin(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const SplashScreen(),
+        '/home': (context) => const WelcomeScreen()
+      },
     );
   }
 }

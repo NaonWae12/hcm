@@ -106,6 +106,15 @@ class AppTextStyles {
     );
   }
 
+  static TextStyle heading3_7 = GoogleFonts.quicksand(
+    textStyle: const TextStyle(
+        fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textColor1),
+  );
+  static TextStyle heading3_8 = GoogleFonts.quicksand(
+    textStyle: const TextStyle(
+        fontSize: 14, fontWeight: FontWeight.w600, color: Color(0xFFED4822)),
+  );
+
   static TextStyle heading4 = GoogleFonts.quicksand(
     textStyle: const TextStyle(
         fontSize: 12, fontWeight: FontWeight.w400, color: Color(0xFF969696)),

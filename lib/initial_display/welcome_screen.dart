@@ -1,5 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:hcm/components/text_style.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../navbar.dart';
+import 'greeting_page.dart';
 import 'page_login.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -12,6 +17,23 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   final _pageController = PageController();
   int _currentPage = 0;
+  @override
+  void initState() {
+    super.initState();
+    checkSession();
+  }
+
+  Future<void> checkSession() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? sessionId = prefs.getString('session_id');
+
+    if (sessionId != null) {
+      // Jika session_id ditemukan, arahkan langsung ke Navbar
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const Navbar()),
+      );
+    }
+  }
 
   List<WelcomeSlider> welcomeSlider = [
     WelcomeSlider(
@@ -139,7 +161,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           } else {
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                builder: (context) => const PageLogin(),
+                builder: (context) => const GreetingPage(),
               ),
             );
           }

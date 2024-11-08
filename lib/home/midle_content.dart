@@ -13,7 +13,7 @@ class MidleContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<String> titles = [
-      'Expanse',
+      'Expense',
       'Payslip',
       // 'Counseling',
       'Time Off',

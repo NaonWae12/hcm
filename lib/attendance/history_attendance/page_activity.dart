@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hcm/components/primary_container.dart';
 import 'package:hcm/components/text_style.dart';
-
-import '../components/textfield_input.dart';
 import 'content_activity.dart';
 
 class PageActivity extends StatelessWidget {
@@ -18,27 +16,21 @@ class PageActivity extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 15.0),
-                child: Text(
-                  'Activity',
-                  style: AppTextStyles.heading1_2,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Expanded(
-                        child: TextfieldInput(
-                      hintText: 'Search your payslip, attendence...',
-                      icon: Icon(Icons.search),
-                    )),
-                    const SizedBox(width: 8),
-                    Container(
-                      height: 48,
-                      width: 48,
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(Icons.arrow_back),
                       color: Colors.white,
-                    )
+                    ),
+                    Text(
+                      'Attendance History',
+                      style: AppTextStyles.heading1_2,
+                    ),
+                    const SizedBox(width: 40)
                   ],
                 ),
               ),
