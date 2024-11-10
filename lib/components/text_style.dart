@@ -89,10 +89,15 @@ class AppTextStyles {
     textStyle: const TextStyle(
         fontSize: 14, fontWeight: FontWeight.w400, color: AppColors.textLight2),
   );
-  static TextStyle heading3_4 = GoogleFonts.quicksand(
-    textStyle: const TextStyle(
-        fontSize: 14, fontWeight: FontWeight.w400, color: Color(0xFF969696)),
-  );
+  static TextStyle heading3_4(BuildContext context) {
+    return GoogleFonts.quicksand(
+      textStyle: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          color: Theme.of(context).colorScheme.primary),
+    );
+  }
+
   static TextStyle heading3_5 = GoogleFonts.quicksand(
     textStyle: const TextStyle(
         fontSize: 14, fontWeight: FontWeight.w600, color: Color(0xFFCBCBCD)),

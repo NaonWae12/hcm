@@ -8,22 +8,21 @@ import 'package:hcm/components/primary_button.dart';
 import 'package:hcm/components/text_style.dart';
 import 'bottom_content.dart';
 import 'package:http/http.dart' as http;
-import 'history_time_of/page_history.dart';
+import 'history_expense/page_history.dart';
 import 'midle_content1.dart';
 import 'midle_content2.dart';
-import 'success_dialog.dart';
 import 'top_content.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class PageTimeOff extends StatefulWidget {
-  const PageTimeOff({super.key});
+class PageExpense extends StatefulWidget {
+  const PageExpense({super.key});
 
   @override
-  State<PageTimeOff> createState() => _PageTimeOffState();
+  State<PageExpense> createState() => _PageExpenseState();
 }
 
-class _PageTimeOffState extends State<PageTimeOff> {
+class _PageExpenseState extends State<PageExpense> {
   final GlobalKey<TopContentState> _topContentKey =
       GlobalKey<TopContentState>();
   final GlobalKey<MidleContent1State> _midleContent1Key =
@@ -64,7 +63,7 @@ class _PageTimeOffState extends State<PageTimeOff> {
       'name': description,
     });
 
-    print('Sending request to API hr.leave/create with data: $body');
+    print('Sending request with data: $body'); // Log data yang akan dikirim
 
     try {
       final response = await http.post(
@@ -77,40 +76,18 @@ class _PageTimeOffState extends State<PageTimeOff> {
       );
 
       if (response.statusCode == 200) {
-        final responseData = json.decode(response.body);
-        final createId = responseData['create_id'];
-
-        if (createId != null) {
-          print('API hr.leave/create successful, create_id: $createId');
-
-          // Log additional information
-          print('Response body from API hr.leave/create: ${response.body}');
-
-          // Lanjutkan untuk mengunggah file
-          await uploadFile(employeeId, createId);
-          if (mounted) {
-            await showSuccessDialog(
-              context,
-              'Your time off request has been successfully submitted!',
-            );
-          }
-        } else {
-          print('create_id not found in response.');
-        }
+        print('Request submitted successfully');
       } else {
         print('Failed to submit request: ${response.statusCode}');
-        print('Response body: ${response.body}');
+        print('Response: ${response.body}');
       }
     } catch (e) {
       print('Error submitting request: $e');
     }
   }
 
-  Future<void> uploadFile(int employeeId, int createId) async {
-    if (_selectedFile == null) {
-      print('No file selected for upload.');
-      return;
-    }
+  Future<void> uploadFile(int employeeId) async {
+    if (_selectedFile == null) return;
 
     final fileBytes = await File(_selectedFile!.path!).readAsBytes();
     final encodedFile = base64Encode(fileBytes);
@@ -120,12 +97,9 @@ class _PageTimeOffState extends State<PageTimeOff> {
     final fileBody = json.encode({
       "name": _selectedFile!.name,
       "datas": encodedFile,
-      "res_model": "hr.leave",
-      "res_id": createId,
+      "res_model": "hr.expense",
       "mimetype": _selectedFile!.extension,
     });
-
-    print('Sending file to API ir.attachment/create with data: $fileBody');
 
     try {
       final response = await http.post(
@@ -138,10 +112,10 @@ class _PageTimeOffState extends State<PageTimeOff> {
       );
 
       if (response.statusCode == 200) {
-        print('File uploaded successfully.');
+        print('File uploaded successfully');
       } else {
         print('Failed to upload file: ${response.statusCode}');
-        print('Response body: ${response.body}');
+        print('Response: ${response.body}');
       }
     } catch (e) {
       print('Error uploading file: $e');
@@ -166,7 +140,7 @@ class _PageTimeOffState extends State<PageTimeOff> {
                 icon: const Icon(Icons.arrow_back),
               ),
               Text(
-                'Time Off',
+                'Expense',
                 style: AppTextStyles.heading1_1,
               ),
               const SizedBox(width: 40),

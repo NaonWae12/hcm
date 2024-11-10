@@ -3,6 +3,7 @@ import 'package:hcm/components/primary_container.dart';
 
 import '../components/text_style.dart';
 // import 'calendar/page_calendar.dart';
+import 'expense/page_expense.dart';
 import 'payslip/page_payslip_pin.dart';
 // import 'resign/page_resign_form.dart';
 import 'time_off/page_time_off.dart';
@@ -33,7 +34,7 @@ class MidleContent extends StatelessWidget {
       // 'assets/Other.png',
     ];
     final List<Widget> pages = [
-      const SettingsPage1(),
+      const PageExpense(),
       const PagePayslipPin(),
       // const SettingsPage3(),
       const PageTimeOff(),

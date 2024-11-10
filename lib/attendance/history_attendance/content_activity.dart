@@ -121,7 +121,7 @@ class _ContentActivityState extends State<ContentActivity> {
                       if (showDate) ...[
                         Text(
                           activity['date'],
-                          style: AppTextStyles.heading3_4,
+                          style: AppTextStyles.heading3_3,
                         ),
                         const SizedBox(height: 8),
                       ],
@@ -162,7 +162,7 @@ class _ContentActivityState extends State<ContentActivity> {
                                                       horizontal: 8.0),
                                               child: Text(
                                                 '→',
-                                                style: AppTextStyles.heading3_4,
+                                                style: AppTextStyles.heading3_3,
                                               ),
                                             ),
                                             Text(

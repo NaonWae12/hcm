@@ -9,7 +9,7 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'activity_detail_dialog.dart';
+import 'history_detail_dialog.dart';
 
 class ContentHistory extends StatefulWidget {
   const ContentHistory({super.key});
@@ -75,7 +75,6 @@ class _ContentHistoryState extends State<ContentHistory> {
                 'startDate': startDate,
                 'endDate': endDate,
                 'private_name': activity['private_name'] ?? '-',
-                'duration_display': activity['duration_display'] ?? '-',
               };
             }).toList();
           });
@@ -127,49 +126,39 @@ class _ContentHistoryState extends State<ContentHistory> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
+                            SvgPicture.asset('assets/icons/time_off.svg'),
+                            const SizedBox(width: 8),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SvgPicture.asset('assets/icons/time_off.svg'),
-                                const SizedBox(width: 8),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                Text(
+                                  activity['description'] ?? 'No Description',
+                                  style: AppTextStyles.heading2_1,
+                                ),
+                                Row(
                                   children: [
                                     Text(
-                                      activity['description'] ??
-                                          'No Description',
-                                      style: AppTextStyles.heading2_1,
+                                      activity['startDate'] ?? '-',
+                                      style: AppTextStyles.heading3_3,
                                     ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          activity['startDate'] ?? '-',
-                                          style: AppTextStyles.heading3_3,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 8.0),
-                                          child: Text(
-                                            '→',
-                                            style: AppTextStyles.heading3_3,
-                                          ),
-                                        ),
-                                        Text(
-                                          activity['endDate'] ?? '-',
-                                          style: AppTextStyles.heading3_3,
-                                        ),
-                                      ],
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: Text(
+                                        '→',
+                                        style: AppTextStyles.heading3_3,
+                                      ),
+                                    ),
+                                    Text(
+                                      activity['endDate'] ?? '-',
+                                      style: AppTextStyles.heading3_3,
                                     ),
                                   ],
                                 ),
                               ],
                             ),
-                            Image.asset(
-                              'assets/green_done.png',
-                              height: 50,
-                            )
                           ],
                         ),
                       ),

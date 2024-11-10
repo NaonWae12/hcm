@@ -85,7 +85,7 @@ class _PagePayslipPinState extends State<PagePayslipPin> {
             const SizedBox(height: 10),
             Text(
               'For security purposes, before accessing your payslip, you need to enter your PIN',
-              style: AppTextStyles.heading3_4,
+              style: AppTextStyles.heading3_3,
               overflow: TextOverflow.clip,
               textAlign: TextAlign.center,
             ),

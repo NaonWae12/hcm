@@ -58,17 +58,17 @@ class PageProfile extends StatelessWidget {
             children: [
               Text(
                 'General',
-                style: AppTextStyles.heading3_4,
+                style: AppTextStyles.heading3_3,
               ),
               General(),
               Text(
                 'Company',
-                style: AppTextStyles.heading3_4,
+                style: AppTextStyles.heading3_3,
               ),
               Company(),
               Text(
                 'About',
-                style: AppTextStyles.heading3_4,
+                style: AppTextStyles.heading3_3,
               ),
               About(),
             ],
